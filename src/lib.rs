@@ -485,7 +485,7 @@ impl Config {
             cmd.arg("-Wdev");
             cmd.arg("--debug-output");
         }
-
+        cmd.arg("-Tclangcl");
         cmd.arg(&self.path).current_dir(&build);
         let mut is_ninja = false;
         if let Some(ref generator) = self.generator {
@@ -555,8 +555,8 @@ impl Config {
             }
             if !is_ninja && !using_nmake_generator {
                 if target.contains("x86_64") {
-                    cmd.arg("-Thost=x64");
-                    cmd.arg("-Ax64");
+                    //cmd.arg("-Thost=x64");
+                    //cmd.arg("-Ax64");
                 } else if target.contains("thumbv7a") {
                     cmd.arg("-Thost=x64");
                     cmd.arg("-Aarm");
@@ -750,7 +750,7 @@ impl Config {
                     parallel_flags = Some(format!("-j{}", s));
                 }
                 Some(ref g) if g.contains("Visual Studio") => {
-                    parallel_flags = Some(format!("/MP{}", s));
+                    //parallel_flags = Some(format!("/MP{}", s));
                 }
                 Some(ref g) if g.contains("NMake") => {
                     // NMake creates `Makefile`s, but doesn't understand `-jN`.
@@ -794,12 +794,12 @@ impl Config {
         cmd.arg("--build").arg(".");
 
         if !self.no_build_target {
-            cmd.arg("--target").arg(target);
+            //cmd.arg("--target").arg(target);
         }
 
         cmd.arg("--config")
-            .arg(&profile)
-            .arg("--")
+            .arg("Release")
+            //.arg("--parallel")
             .args(&self.build_args)
             .current_dir(&build);
 
