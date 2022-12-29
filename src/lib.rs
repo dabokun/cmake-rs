@@ -485,7 +485,9 @@ impl Config {
             cmd.arg("-Wdev");
             cmd.arg("--debug-output");
         }
-        cmd.arg("-Tclangcl");
+        if msvc {
+            cmd.arg("-Tclangcl");
+        }
         cmd.arg(&self.path).current_dir(&build);
         let mut is_ninja = false;
         if let Some(ref generator) = self.generator {
